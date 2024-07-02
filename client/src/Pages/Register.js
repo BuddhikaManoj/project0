@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
-import { ContentNew } from "./ContentNew";
-import { Link } from "react-router-dom";
+import axios from 'axios';
 
-export default function Login() {
+export default function Register() {
   const [username, setuserName] = useState("");
   const [password, setPassword] = useState("");
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,10 +15,18 @@ export default function Login() {
       "and your password is",
       password
     );
-    alert(`your username is ${username} and password is ${password}`);
-    // setuserName((pre) => (pre.length > 0 ? "" : pre));
-    // setPassword((pre) => (pre.length > 0 ? "" : pre));
-    window.location.reload();
+  const user = {
+    username,
+    password
+  };
+  console.log(user);
+   axios.post("/api/user/register",user)
+        .then((response) => {
+            window.alert(response.data.message);
+        })
+        .catch((error) => {
+            window.alert(error.response.data.message);
+        });
   };
 
   return (
@@ -35,7 +43,7 @@ export default function Login() {
           color: "teal",
         }}
       >
-        <h2>Login Page</h2>
+        <h2>Registration</h2>
       </div>
       <div style={{ width: "auto", padding: "0px 250px" }}>
         <form
@@ -71,7 +79,8 @@ export default function Login() {
                 paddingLeft:"5px"
             }}
           ></input>
-          <button type="submit" style={{ 
+          <button type="submit" 
+          style={{ 
             marginTop: "15px",
             backgroundColor:"#3d4ecf",
             color:"#fff",
@@ -81,27 +90,10 @@ export default function Login() {
             cursor:"pointer",
             fontSize:"18px",
             fontWeight:"600" }}>
-            Login
-          </button>
-        </form>
-
-        <Link to="/register">
-        <button style={{ 
-            marginTop: "15px",
-            backgroundColor:"green",
-            color:"#fff",
-            border:"none",
-            borderRadius:"4px",
-            padding:"4px 3px",
-            cursor:"pointer",
-            fontSize:"18px",
-            fontWeight:"600",
-            width:"auto" }}>
             Register
           </button>
-          </Link>
+        </form>
       </div>
-      <ContentNew />
     </div>
   );
-}
+};
