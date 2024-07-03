@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import { ContentNew } from "./ContentNew";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
   const [username, setuserName] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,9 +18,25 @@ export default function Login() {
       password
     );
     alert(`your username is ${username} and password is ${password}`);
-    // setuserName((pre) => (pre.length > 0 ? "" : pre));
-    // setPassword((pre) => (pre.length > 0 ? "" : pre));
-    window.location.reload();
+
+    const credentials = {
+      username,
+      password
+    }
+
+    axios.post("/api/user/login",credentials)
+         .then((response) => {
+          let redirectPath;
+          const userData = response.data.data;
+          if(userData.roll === "Teacher"){
+            redirectPath = `/teacher`;
+          }
+          else{
+            redirectPath = `/student`;
+          }
+          navigate(redirectPath);
+          alert(response.data.message);
+         })
   };
 
   return (

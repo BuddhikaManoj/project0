@@ -5,6 +5,7 @@ import axios from 'axios';
 export default function Register() {
   const [username, setuserName] = useState("");
   const [password, setPassword] = useState("");
+  const [roll, setRoll] = useState("");
 
 
   const handleSubmit = (e) => {
@@ -13,13 +14,16 @@ export default function Register() {
       "your user name is",
       username,
       "and your password is",
-      password
+      password,
+      "and your roll is",
+      roll
     );
   const user = {
     username,
-    password
+    password,
+    roll
   };
-  console.log(user);
+
    axios.post("/api/user/register",user)
         .then((response) => {
             window.alert(response.data.message);
@@ -79,6 +83,20 @@ export default function Register() {
                 paddingLeft:"5px"
             }}
           ></input>
+         <lebel style={{ padding: "10px 0px",color:"gray" }}>Choose :</lebel>
+         <select  style={{width:"auto",
+                height:"25px",
+                border:"1px solid gray",
+                borderRadius:"4px",
+                paddingLeft:"5px"
+            }}
+            onChange={(e) => {
+              setRoll(e.target.value);
+            }}>
+          <option>Choose one</option>
+          <option>Teacher</option>
+          <option>Student</option>
+         </select>
           <button type="submit" 
           style={{ 
             marginTop: "15px",
