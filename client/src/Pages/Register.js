@@ -5,7 +5,7 @@ import axios from 'axios';
 export default function Register() {
   const [username, setuserName] = useState("");
   const [password, setPassword] = useState("");
-  const [roll, setRoll] = useState("");
+  const [role, setRole] = useState("");
 
 
   const handleSubmit = (e) => {
@@ -16,12 +16,12 @@ export default function Register() {
       "and your password is",
       password,
       "and your roll is",
-      roll
+      role
     );
   const user = {
     username,
     password,
-    roll
+    role
   };
 
    axios.post("/api/user/register",user)
@@ -91,7 +91,7 @@ export default function Register() {
                 paddingLeft:"5px"
             }}
             onChange={(e) => {
-              setRoll(e.target.value);
+              setRole(e.target.value);
             }}>
           <option>Choose one</option>
           <option>Teacher</option>
