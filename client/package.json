@@ -1,5 +1,5 @@
 {
-  "name": "project0",
+  "name": "Login authentication",
   "version": "0.1.0",
   "private": true,
   "proxy" : "http://localhost:6000",
